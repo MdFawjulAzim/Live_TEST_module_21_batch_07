@@ -1,0 +1,132 @@
+{
+	"info": {
+		"_postman_id": "a381bbde-8afd-473b-880e-37a428bcdb1d",
+		"name": "Live_TEST_module_21_batch_07",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38179196"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "CreateStudent",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstName\": \"Johnaaaa\",\r\n  \"lastName\": \"Doe\",\r\n  \"rollNumber\": \"12345\",\r\n  \"phoneNumber\": \"0123456789\",\r\n  \"password\": \"password123\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE}}/CreateStudent",
+							"host": [
+								"{{BASE}}"
+							],
+							"path": [
+								"CreateStudent"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SingleReadStudent",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE}}/SingleReadStudent/67644a134ac31357708499c6",
+							"host": [
+								"{{BASE}}"
+							],
+							"path": [
+								"SingleReadStudent",
+								"67644a134ac31357708499c6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SingleStudentDelete",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE}}/SingleStudentDelete/67644a134ac31357708499c6",
+							"host": [
+								"{{BASE}}"
+							],
+							"path": [
+								"SingleStudentDelete",
+								"67644a134ac31357708499c6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SingleStudentUpdate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstName\": \"John\",\r\n  \"lastName\": \"Doe rafi\",\r\n  \"NIDNumber\": \"123425267890\",\r\n  \"phoneNumber\": \"0172122345678\",\r\n  \"bloodGroup\": \"B+\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE}}/SingleStudentUpdate",
+							"host": [
+								"{{BASE}}"
+							],
+							"path": [
+								"SingleStudentUpdate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE",
+			"value": "http://localhost:5030/api/v1",
+			"type": "string"
+		}
+	]
+}

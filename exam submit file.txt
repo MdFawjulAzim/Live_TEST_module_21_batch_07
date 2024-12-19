@@ -1,0 +1,144 @@
+...........................StudentController.js............................
+
+const {CreateStudentService,SingleReadStudentService,SingleStudentDeleteService,SingleStudentUpdateService} = require('../services/StudentServices.js');
+
+//CreateStudent 
+exports.CreateStudent = async(req,res)=>{
+    let result = await CreateStudentService(req) ;
+    return res.status(200).json(result);
+}
+
+//SingleReadStudent
+exports.SingleReadStudent = async(req,res)=>{
+    let result = await SingleReadStudentService(req);
+    return res.status(200).json(result);
+}
+
+//SingleStudentDelete
+exports.SingleStudentDelete = async(req,res)=>{
+    let result = await SingleStudentDeleteService(req);
+    return res.status(200).json(result);
+}
+
+//SingleStudentUpdate
+exports.SingleStudentUpdate = async(req,res)=>{
+    let result = await SingleStudentUpdateService(req);
+    return res.status(200).json(result);
+}
+
+...........................StudentModel.js............................
+
+const mongoose = require("mongoose");
+
+const DataSchema = mongoose.Schema(
+  {
+    firstName: { type: String },
+    lastName: { type: String },
+    rollNumber: { type: String },
+    phoneNumber: { type: String },
+    password: { type: String }
+  },
+  { timestamps: true, versionKey: false }
+);
+
+const studentModel= mongoose.model("students", DataSchema);
+module.exports = studentModel;
+
+
+...........................StudentServices.js............................
+const StudentModel = require("../models/StudentModel.js");
+
+const CreateStudentService=async(req)=>{
+    try{
+        let reqBody = req.body;
+        let Data = await StudentModel.create(reqBody);
+        return {status: "success",message: "Create a student successfully", data: Data};
+    }catch(e){
+        return {status: "error", message:e.toString()}
+    }
+}
+
+//SingleReadStudentService
+const SingleReadStudentService = async(req)=>{
+    try{
+        let user_id = req.params.user_id;
+        let result = await StudentModel.findOne({_id:user_id});
+        return {status:"success", message: "Read the data of a single student successfully", data:result}
+    }catch (e) {
+        return { status: "fail", message: `Something went wrong: ${e.message}` };
+    }
+}
+
+//SingleStudentDeleteService
+const SingleStudentDeleteService = async(req)=>{
+    try{
+        let user_id = req.params.user_id;
+
+        const user = await StudentModel.findByIdAndDelete(user_id);
+        return {status:"success", message: "Delete a student based on a specific ID successfully"} 
+    }catch (e) {
+        return { status: "fail", message: `Something went wrong: ${e.message}` };
+    }
+}
+
+//SingleStudentUpdateService
+const SingleStudentUpdateService = async(req)=>{
+    try{
+        let user_id = req.params.user_id;
+        let reqBody = req.body;
+
+        await StudentModel.updateOne({_id:user_id},{$set:reqBody});
+        return {status:"success", message: "Update a student based on a specific ID successfully"}
+
+        
+    }catch (e) {
+        return { status: "fail", message: `Something went wrong: ${e.message}` };
+    }
+}
+
+
+module.exports = {
+    CreateStudentService,
+    SingleReadStudentService,
+    SingleStudentDeleteService,
+    SingleStudentUpdateService
+
+}
+
+
+
+...........................api.js............................
+const express = require('express');
+const StudentController = require('../controllers/StrudentController.js');
+
+
+const router = express.Router();
+
+
+
+// Create a student 
+router.post('/CreateStudent',StudentController.CreateStudent);
+//Read the data of a single student.
+router.get('/SingleReadStudent/:user_id',StudentController.SingleReadStudent);
+//Delete a student based on a specific ID
+router.get('/SingleStudentDelete/:user_id',StudentController.SingleStudentDelete);
+//Update a student based on a specific ID.
+router.post('/SingleStudentUpdate/:user_id',StudentController.SingleStudentUpdate);
+
+
+
+module.exports = router;
+
+
+
+...........................index.js............................
+const app=require("./app.js");
+const PORT=5030;
+app.listen(PORT,function () {
+    console.log("App Run @5030")
+})
+
+
+
+...........................Git Hub Link............................
+https://github.com/MdFawjulAzim/Live_TEST_module_21_batch_07
